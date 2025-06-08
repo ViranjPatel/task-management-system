@@ -8,17 +8,16 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 3001;
 
-// Improved CORS configuration to allow requests from GitHub Pages
+// More permissive CORS configuration for deployment troubleshooting
 app.use(cors({
-  origin: [
-    'https://viranjpatel.github.io',
-    'https://viranjpatel.github.io/task-management-system',
-    'http://localhost:3000'
-  ],
+  origin: true, // Allow all origins temporarily
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
   credentials: true
 }));
+
+// Handle preflight requests
+app.options('*', cors());
 
 app.use(express.json());
 
@@ -292,7 +291,8 @@ app.get('/api/health', (req, res) => {
   res.json({ 
     status: 'OK', 
     database: 'SQLite',
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
+    cors: 'Permissive for debugging'
   });
 });
 
@@ -306,7 +306,8 @@ app.get('/', (req, res) => {
       '/api/assignees',
       '/api/health'
     ],
-    documentation: 'https://github.com/ViranjPatel/task-management-system'
+    documentation: 'https://github.com/ViranjPatel/task-management-system',
+    cors: 'All origins allowed'
   });
 });
 
@@ -318,6 +319,7 @@ app.listen(port, '0.0.0.0', () => {
   console.log(`📱 API available at http://localhost:${port}/api`);
   console.log(`💾 Database: SQLite (file-based, no password required)`);
   console.log(`📄 Database file: ${dbPath}`);
+  console.log(`🌐 CORS: Allowing all origins for debugging`);
 });
 
 // Graceful shutdown
