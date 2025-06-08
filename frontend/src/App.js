@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import './App.css';
+import TaskGrid from './TaskGrid';
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
 
@@ -7,6 +8,8 @@ function App() {
   const [activities, setActivities] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const syncingIds = useRef(new Set());
+  const debounceTimers = useRef(new Map());
 
   // Load data
   useEffect(() => {
@@ -29,6 +32,24 @@ function App() {
       .finally(() => {
         setLoading(false);
       });
+  }, []);
+
+  const debouncedUpdate = useCallback((id, field, value, delay = 1000) => {
+    const key = `${id}-${field}`;
+    if (debounceTimers.current.has(key)) {
+      clearTimeout(debounceTimers.current.get(key));
+    }
+    debounceTimers.current.set(
+      key,
+      setTimeout(() => {
+        updateTask(id, field, value);
+        debounceTimers.current.delete(key);
+      }, delay)
+    );
+  }, []);
+
+  const updateTaskLocal = useCallback((id, field, value) => {
+    setActivities(prev => prev.map(a => a.id === id ? { ...a, [field]: value } : a));
   }, []);
 
   const addNewTask = () => {
@@ -61,24 +82,39 @@ function App() {
     });
   };
 
-  const updateTask = (id, field, value) => {
+  const updateTask = useCallback((id, field, value) => {
     const activity = activities.find(a => a.id === id);
+    if (!activity) return;
     const updatedActivity = { ...activity, [field]: value };
+
+    syncingIds.current.add(id);
 
     fetch(`${API_URL}/api/activities/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(updatedActivity)
     })
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Failed to update: ${response.status}`);
+      }
+      return response.json();
+    })
     .then(() => {
       setActivities(prev => prev.map(a => a.id === id ? updatedActivity : a));
     })
     .catch(error => {
       console.error('Update failed:', error);
-      alert('Failed to update task');
+    })
+    .finally(() => {
+      syncingIds.current.delete(id);
     });
-  };
+  }, [activities]);
+
+  const handleGridUpdate = useCallback((id, field, value) => {
+    updateTaskLocal(id, field, value);
+    debouncedUpdate(id, field, value);
+  }, [debouncedUpdate, updateTaskLocal]);
 
   const deleteTask = (id) => {
     if (!window.confirm('Are you sure you want to delete this task?')) return;
@@ -216,100 +252,11 @@ function App() {
               No activities found. Make sure your backend is running.
             </p>
           ) : (
-            <table style={{ 
-              width: '100%', 
-              borderCollapse: 'collapse',
-              fontSize: '14px'
-            }}>
-              <thead>
-                <tr style={{ background: '#f8fafc', borderBottom: '2px solid #e2e8f0' }}>
-                  <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600' }}>Task Name</th>
-                  <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600' }}>Status</th>
-                  <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600' }}>Priority</th>
-                  <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600' }}>Assignee</th>
-                  <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600' }}>Progress</th>
-                  <th style={{ padding: '12px', textAlign: 'left', fontWeight: '600' }}>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {activities.map((activity) => (
-                  <tr key={activity.id} style={{ borderBottom: '1px solid #f1f5f9' }}>
-                    <td style={{ padding: '12px', fontWeight: 'bold' }}>
-                      <input
-                        type="text"
-                        value={activity.task_name || ''}
-                        onChange={(e) => updateTask(activity.id, 'task_name', e.target.value)}
-                        style={{ border: 'none', background: 'transparent', width: '100%', fontWeight: 'bold' }}
-                      />
-                    </td>
-                    <td style={{ padding: '12px' }}>
-                      <select
-                        value={activity.status || ''}
-                        onChange={(e) => updateTask(activity.id, 'status', e.target.value)}
-                        style={{ border: 'none', background: 'transparent', width: '100%' }}
-                      >
-                        <option value="Not Started">Not Started</option>
-                        <option value="In Progress">In Progress</option>
-                        <option value="Completed">Completed</option>
-                        <option value="On Hold">On Hold</option>
-                        <option value="Cancelled">Cancelled</option>
-                      </select>
-                    </td>
-                    <td style={{ padding: '12px' }}>
-                      <select
-                        value={activity.priority || ''}
-                        onChange={(e) => updateTask(activity.id, 'priority', e.target.value)}
-                        style={{ border: 'none', background: 'transparent', width: '100%' }}
-                      >
-                        <option value="Low">Low</option>
-                        <option value="Medium">Medium</option>
-                        <option value="High">High</option>
-                        <option value="Critical">Critical</option>
-                      </select>
-                    </td>
-                    <td style={{ padding: '12px' }}>
-                      <input
-                        type="text"
-                        value={activity.assignee || ''}
-                        onChange={(e) => updateTask(activity.id, 'assignee', e.target.value)}
-                        style={{ border: 'none', background: 'transparent', width: '100%' }}
-                      />
-                    </td>
-                    <td style={{ padding: '12px' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        <input
-                          type="range"
-                          min="0"
-                          max="100"
-                          value={activity.progress || 0}
-                          onChange={(e) => updateTask(activity.id, 'progress', parseInt(e.target.value))}
-                          style={{ flex: 1 }}
-                        />
-                        <span style={{ fontSize: '12px', fontWeight: 'bold', minWidth: '40px' }}>
-                          {activity.progress || 0}%
-                        </span>
-                      </div>
-                    </td>
-                    <td style={{ padding: '12px', textAlign: 'center' }}>
-                      <button 
-                        onClick={() => deleteTask(activity.id)}
-                        style={{
-                          background: 'none',
-                          border: 'none',
-                          cursor: 'pointer',
-                          fontSize: '1.2rem',
-                          padding: '0.25rem',
-                          borderRadius: '4px'
-                        }}
-                        title="Delete task"
-                      >
-                        🗑️
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <TaskGrid
+              activities={activities}
+              onCellUpdate={handleGridUpdate}
+              deleteTask={deleteTask}
+            />
           )}
         </div>
       </div>
