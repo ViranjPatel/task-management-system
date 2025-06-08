@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+
 function App() {
   const [activities, setActivities] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -8,7 +10,7 @@ function App() {
 
   // Load data
   useEffect(() => {
-    fetch('http://localhost:3001/api/activities')
+    fetch(`${API_URL}/api/activities`)
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -44,7 +46,7 @@ function App() {
       tags: []
     };
 
-    fetch('http://localhost:3001/api/activities', {
+    fetch(`${API_URL}/api/activities`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newTask)
@@ -63,7 +65,7 @@ function App() {
     const activity = activities.find(a => a.id === id);
     const updatedActivity = { ...activity, [field]: value };
 
-    fetch(`http://localhost:3001/api/activities/${id}`, {
+    fetch(`${API_URL}/api/activities/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(updatedActivity)
@@ -81,7 +83,7 @@ function App() {
   const deleteTask = (id) => {
     if (!window.confirm('Are you sure you want to delete this task?')) return;
 
-    fetch(`http://localhost:3001/api/activities/${id}`, { method: 'DELETE' })
+    fetch(`${API_URL}/api/activities/${id}`, { method: 'DELETE' })
       .then(() => {
         setActivities(prev => prev.filter(a => a.id !== id));
       })
