@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('shows loading indicator', () => {
+test('renders loading message initially', () => {
   render(<App />);
-  const loadingElement = screen.getByText(/Loading activities.../i);
+  const loadingElement = screen.getByText(/loading activities\\.{3}/i);
   expect(loadingElement).toBeInTheDocument();
 });
