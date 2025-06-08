@@ -34,19 +34,6 @@ function App() {
       });
   }, []);
 
-  const debouncedUpdate = useCallback((id, field, value, delay = 1000) => {
-    const key = `${id}-${field}`;
-    if (debounceTimers.current.has(key)) {
-      clearTimeout(debounceTimers.current.get(key));
-    }
-    debounceTimers.current.set(
-      key,
-      setTimeout(() => {
-        updateTask(id, field, value);
-        debounceTimers.current.delete(key);
-      }, delay)
-    );
-  }, []);
 
   const updateTaskLocal = useCallback((id, field, value) => {
     setActivities(prev => prev.map(a => a.id === id ? { ...a, [field]: value } : a));
@@ -110,6 +97,20 @@ function App() {
       syncingIds.current.delete(id);
     });
   }, [activities]);
+
+  const debouncedUpdate = useCallback((id, field, value, delay = 1000) => {
+    const key = `${id}-${field}`;
+    if (debounceTimers.current.has(key)) {
+      clearTimeout(debounceTimers.current.get(key));
+    }
+    debounceTimers.current.set(
+      key,
+      setTimeout(() => {
+        updateTask(id, field, value);
+        debounceTimers.current.delete(key);
+      }, delay)
+    );
+  }, [updateTask]);
 
   const handleGridUpdate = useCallback((id, field, value) => {
     updateTaskLocal(id, field, value);
