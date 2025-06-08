@@ -32,263 +32,256 @@ A modern, full-stack task management application built with React and Node.js, f
 - **Node.js** - JavaScript runtime
 - **Express.js** - Web application framework
 - **SQLite** - Lightweight database
-- **JWT** - Secure authentication
+- **JWT** - Secure authentication tokens
 
 ## 🎨 Material Design 3 Implementation
 
-This application implements Google's Material Design 3 (Material You) design system with:
+This application fully implements Google's Material Design 3 system:
 
 ### Design Tokens
-- **Color System**: Dynamic color tokens with light/dark theme support
-- **Typography Scale**: Hierarchical text styles for optimal readability
-- **Shape System**: Consistent border radius and corner treatments
-- **Elevation**: Layered shadow system for depth perception
-- **Motion**: Smooth animations with easing curves
+- **Color System**: Dynamic color palettes with light/dark theme support
+- **Typography Scale**: Consistent text hierarchy using Material 3 type scale
+- **Elevation**: Subtle shadows following Material 3 elevation system
+- **Shape**: Rounded corners using Material 3 shape tokens
+- **Motion**: Smooth animations with Material 3 motion curves
 
 ### Components
-- **Filled Buttons**: Primary actions with elevation and state layers
-- **Outlined Buttons**: Secondary actions with stroke emphasis
-- **Cards**: Elevated surfaces for content grouping
-- **Data Tables**: Structured information display
-- **Text Fields**: Material input components with focus states
-- **Progress Indicators**: Visual feedback for loading states
+- **Buttons**: Filled and outlined buttons with state layers
+- **Cards**: Elevated surfaces with proper elevation
+- **Data Tables**: Material 3 compliant data presentation
+- **Text Fields**: Borderless inputs with focus indicators
+- **Progress Indicators**: Custom sliders with Material 3 styling
 
 ### Accessibility Features
-- **High Contrast Mode**: Enhanced visibility for accessibility needs
+- **High Contrast**: Support for high contrast color schemes
 - **Reduced Motion**: Respects user's motion preferences
-- **Focus Management**: Clear focus indicators for keyboard navigation
-- **Screen Reader Support**: Semantic HTML and ARIA labels
+- **Focus Management**: Proper focus indicators for keyboard navigation
+- **Screen Readers**: Semantic HTML with proper ARIA labels
 
-### Theme Support
+### Theming
 ```css
-/* Automatic dark mode detection */
-@media (prefers-color-scheme: dark) { ... }
+/* Light Theme (Default) */
+--md-sys-color-primary: #6200ea;
+--md-sys-color-surface: #fef7ff;
+--md-sys-color-background: #fef7ff;
 
-/* Manual theme toggle */
-[data-theme="dark"] { ... }
+/* Dark Theme */
+--md-sys-color-primary: #d0bcff;
+--md-sys-color-surface: #141218;
+--md-sys-color-background: #141218;
 ```
 
-## 🚀 Development Setup
+## 🖥️ Development Setup
 
 ### Prerequisites
-- Node.js (v14 or higher)
-- npm or yarn
+- **Node.js** (v16 or higher)
+- **npm** (v8 or higher)
+- **Git**
 
 ### Installation
 
-1. **Clone the repository:**
+1. **Clone the repository**:
 ```bash
 git clone https://github.com/ViranjPatel/task-management-system.git
 cd task-management-system
 ```
 
-2. **Install frontend dependencies:**
+2. **Install frontend dependencies**:
 ```bash
 cd frontend
 npm install
 ```
 
-3. **Install backend dependencies:**
+3. **Install backend dependencies**:
 ```bash
 cd ../backend
 npm install
 ```
 
-4. **Environment Configuration:**
-Create `.env` files:
-
-**Frontend (.env):**
-```env
+4. **Environment Setup**:
+Create a `.env` file in the frontend directory:
+```bash
+# Frontend .env
 REACT_APP_API_URL=http://localhost:3001
 ```
 
-**Backend (.env):**
-```env
+Create a `.env` file in the backend directory:
+```bash
+# Backend .env
 PORT=3001
-JWT_SECRET=your-secret-key
+JWT_SECRET=your-secret-key-here
 NODE_ENV=development
 ```
 
-5. **Start development servers:**
+### Development Commands
 
-**Frontend (port 3000):**
+**Start Frontend** (runs on http://localhost:3000):
 ```bash
 cd frontend
 npm start
 ```
 
-**Backend (port 3001):**
+**Start Backend** (runs on http://localhost:3001):
 ```bash
 cd backend
 npm start
 ```
 
-## 🧪 Testing
-
-### Frontend Tests
+**Run Tests**:
 ```bash
+# Frontend tests
 cd frontend
 npm test
-```
 
-### Backend Tests
-```bash
+# Backend tests
 cd backend
 npm test
 ```
 
-### Run All Tests
+**Build for Production**:
 ```bash
-# From root directory
-npm run test:all
-```
-
-## 📦 Deployment
-
-### Automatic Deployment
-- **GitHub Actions** configured for automatic deployment
-- Push to `main` branch triggers GitHub Pages deployment
-- Backend auto-deploys to Render on push
-
-### Manual Deployment
-```bash
-# Frontend to GitHub Pages
 cd frontend
-npm run deploy
-
-# Build for production
 npm run build
 ```
 
-### Deployment Script
+## 🚀 Deployment
+
+### Automatic Deployment
+- **GitHub Actions** workflow automatically deploys to GitHub Pages
+- Push to `main` branch triggers deployment
+- Build status visible in Actions tab
+
+### Manual Deployment
 ```bash
+# Deploy frontend to GitHub Pages
+cd frontend
+npm run deploy
+
+# Or use the deployment script
 chmod +x deploy.sh
 ./deploy.sh
 ```
 
-## 🎯 Material Design 3 Guidelines
+### Backend Deployment (Render)
+1. Connect your GitHub repository to Render
+2. Set environment variables in Render dashboard
+3. Deploy automatically on git push
 
-### Color Usage
-```css
-/* Primary colors for main actions */
---md-sys-color-primary: #6200ea;
---md-sys-color-on-primary: #ffffff;
+## 📊 Performance Features
 
-/* Surface colors for backgrounds */
---md-sys-color-surface: #fef7ff;
---md-sys-color-on-surface: #1c1b1f;
-```
+- **Code Splitting**: Lazy loading for optimal bundle size
+- **Caching**: Efficient caching strategies
+- **Optimized Images**: Responsive image loading
+- **Bundle Analysis**: webpack-bundle-analyzer for size monitoring
 
-### Component Styling
-```css
-/* Buttons follow M3 specifications */
-.md-filled-button {
-  border-radius: var(--md-sys-shape-corner-large);
-  padding: 0.625rem 1.5rem;
-  box-shadow: var(--md-sys-elevation-1);
-}
-```
+## 🧪 Testing
 
-### Motion Design
-```css
-/* Standard easing curves */
---md-sys-motion-easing-standard: cubic-bezier(0.2, 0, 0, 1);
---md-sys-motion-duration-short4: 200ms;
-```
+### Frontend Testing
+- **Unit Tests**: Jest and React Testing Library
+- **Component Tests**: Comprehensive component testing
+- **Accessibility Tests**: Automated a11y testing
+- **Visual Regression**: Prevent UI breaking changes
+
+### Backend Testing
+- **API Tests**: Comprehensive endpoint testing
+- **Database Tests**: SQLite in-memory testing
+- **Authentication Tests**: JWT token validation
+
+## 📱 Browser Support
+
+- **Chrome** 90+
+- **Firefox** 88+
+- **Safari** 14+
+- **Edge** 90+
+- **Mobile Browsers**: iOS Safari 14+, Chrome Mobile 90+
 
 ## 🔧 Customization
 
 ### Theme Customization
-Modify CSS custom properties in `App.css`:
+Modify CSS custom properties in `src/App.css`:
+
 ```css
 :root {
-  --md-sys-color-primary: #your-color;
-  --md-sys-shape-corner-medium: 16px;
+  --md-sys-color-primary: #your-primary-color;
+  --md-sys-color-secondary: #your-secondary-color;
+  /* Add more custom colors */
 }
 ```
 
-### Component Customization
-Create new Material Design components:
-```css
-.your-component {
-  background: var(--md-sys-color-surface);
-  border-radius: var(--md-sys-shape-corner-medium);
-  box-shadow: var(--md-sys-elevation-2);
+### Component Styling
+All components use Material Design 3 classes:
+- `.md-filled-button` - Primary action buttons
+- `.md-outlined-button` - Secondary action buttons
+- `.md-card` - Container surfaces
+- `.md-data-table` - Data presentation
+
+## 📋 API Documentation
+
+### Endpoints
+- `GET /api/activities` - Fetch all tasks
+- `POST /api/activities` - Create new task
+- `PUT /api/activities/:id` - Update task
+- `DELETE /api/activities/:id` - Delete task
+- `POST /api/auth/login` - User authentication
+- `POST /api/auth/register` - User registration
+
+### Request Examples
+```javascript
+// Create a new task
+POST /api/activities
+{
+  "task_name": "Complete project",
+  "description": "Finish the task management system",
+  "status": "In Progress",
+  "priority": "High",
+  "assignee": "John Doe",
+  "progress": 75
 }
 ```
-
-## 📱 Progressive Web App
-
-The application supports PWA features:
-- **Offline functionality** (service worker)
-- **Install prompt** for mobile devices
-- **App-like experience** on mobile
 
 ## 🐛 Troubleshooting
 
 ### Common Issues
 
-**1. Backend not connecting:**
-- Ensure backend is running on port 3001
-- Check CORS configuration
-- Verify environment variables
+**Backend Connection Error**:
+- Check if backend server is running on port 3001
+- Verify `REACT_APP_API_URL` in frontend `.env`
+- Check network connectivity
 
-**2. Dark theme not working:**
-- Check browser's color scheme preference
-- Ensure CSS custom properties are loaded
-- Verify theme toggle implementation
+**Render Backend Sleep**:
+- First request takes 10-20 seconds (cold start)
+- Subsequent requests are fast
+- Consider upgrading to paid tier for always-on
 
-**3. Render backend sleeping:**
-- First request after sleep takes 10-20 seconds
-- Consider upgrading to paid Render plan for always-on
-
-## 📊 Performance
-
-### Optimizations Implemented
-- **Code splitting** for faster initial load
-- **Image optimization** and lazy loading
-- **Bundle analysis** with webpack-bundle-analyzer
-- **CSS purging** for smaller stylesheets
-
-### Performance Metrics
-- **Lighthouse Score**: 95+ across all metrics
-- **First Contentful Paint**: < 1.5s
-- **Time to Interactive**: < 3s
+**GitHub Pages Deployment**:
+- Check Actions tab for build status
+- Verify `homepage` field in `package.json`
+- Ensure repository has Pages enabled
 
 ## 🤝 Contributing
 
 1. **Fork** the repository
 2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
-3. **Follow** Material Design 3 guidelines
-4. **Test** your changes thoroughly
-5. **Commit** with descriptive messages
-6. **Push** to your branch
-7. **Create** a Pull Request
+3. **Commit** your changes (`git commit -m 'Add amazing feature'`)
+4. **Push** to the branch (`git push origin feature/amazing-feature`)
+5. **Open** a Pull Request
 
-### Code Style
-- Use **Material Design 3** components and tokens
-- Follow **React hooks** best practices
-- Write **comprehensive tests**
-- Document **accessibility features**
-
-## 📋 Roadmap
-
-- [ ] **Advanced filtering** and search
-- [ ] **Drag-and-drop** task reordering
-- [ ] **Team collaboration** features
-- [ ] **File attachments** support
-- [ ] **Push notifications**
-- [ ] **Offline sync** capabilities
+### Development Guidelines
+- Follow Material Design 3 principles
+- Write comprehensive tests
+- Update documentation
+- Use semantic commit messages
+- Ensure accessibility compliance
 
 ## 📄 License
 
-This project is open source and available under the [MIT License](LICENSE).
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 
-- **Google Material Design Team** for the design system
-- **React Team** for the amazing framework
-- **Open source community** for inspiration and tools
+- **Google Material Design** team for the excellent design system
+- **React** team for the amazing framework
+- **Open Source Community** for the tools and libraries used
 
 ---
 
