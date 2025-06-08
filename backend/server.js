@@ -8,8 +8,13 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 3001;
 
-// Middleware
-app.use(cors());
+// Improved CORS configuration to allow requests from GitHub Pages
+app.use(cors({
+  origin: ['https://viranjpatel.github.io', 'http://localhost:3000'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 app.use(express.json());
 
 // SQLite database setup - creates database.sqlite file in your project
@@ -286,10 +291,24 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// Root endpoint to confirm the server is running
+app.get('/', (req, res) => {
+  res.json({
+    message: 'Task Management API is running',
+    endpoints: [
+      '/api/activities',
+      '/api/activities/:id',
+      '/api/assignees',
+      '/api/health'
+    ],
+    documentation: 'https://github.com/ViranjPatel/task-management-system'
+  });
+});
+
 // Initialize database and start server
 initDB();
 
-app.listen(port, () => {
+app.listen(port, '0.0.0.0', () => {
   console.log(`🚀 Server running on port ${port}`);
   console.log(`📱 API available at http://localhost:${port}/api`);
   console.log(`💾 Database: SQLite (file-based, no password required)`);
