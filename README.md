@@ -1,278 +1,105 @@
 # Task Management System
 
-A modern, Excel-like task management application built with React frontend and Node.js backend.
+A full-stack task management application built with React and Node.js.
 
-![Task Management System](https://via.placeholder.com/800x400/667eea/ffffff?text=Task+Management+System)
+## Features
 
-## ✨ Live Demo
+- User authentication (register/login)
+- Create, read, update, and delete tasks
+- Task categorization with priorities
+- Responsive design
+- Real-time task management
 
-- **Frontend**: [https://viranjpatel.github.io/task-management-system/](https://viranjpatel.github.io/task-management-system/)
-- **Backend API**: [https://task-management-system-cd8v.onrender.com/](https://task-management-system-cd8v.onrender.com/)
+## Deployment Status
 
-> **Note**: The backend is hosted on Render's free tier, which means it goes to sleep after 15 minutes of inactivity. The first request might be slow (10-20 seconds) while it wakes up.
+🚀 **Auto-deployment enabled!** 
 
-## ✨ Features
+This application is automatically deployed to GitHub Pages when changes are pushed to the main branch.
 
-- 📊 **Interactive Data Grid** - Excel-like editing experience
-- ✏️ **Inline Editing** - Click any cell to edit directly
-- 🔄 **Real-time Updates** - Changes saved automatically
-- 🎨 **Modern UI** - Beautiful gradient design
-- 📱 **Responsive** - Works on desktop and mobile
-- 🔍 **Advanced Filtering** - Built-in search and filter
-- 📈 **Progress Tracking** - Visual progress bars
-- 🏷️ **Task Management** - Status, priority, assignees, tags
-- ⚡ **Fast Performance** - Optimized for large datasets
+- **Frontend URL**: https://viranjpatel.github.io/task-management-system/
+- **Backend URL**: https://task-management-system-backend-latest.onrender.com
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Frontend
-- **React 18/19** - Modern React with hooks
-- **Modern CSS** - Gradients, animations, responsive design
-- **Fetch API** - For backend communication
+- React.js
+- Axios for API calls
+- Responsive CSS
 
 ### Backend
-- **Node.js** - JavaScript runtime
-- **Express.js** - Web framework
-- **SQLite** - Lightweight file-based database
-- **RESTful API** - Standard API architecture
+- Node.js
+- Express.js
+- SQLite database
+- JWT authentication
 
-## 🚀 Quick Start
+## Development Setup
 
 ### Prerequisites
-- Node.js (v16 or higher)
-- npm or yarn
+- Node.js (v14 or higher)
+- npm
 
 ### Installation
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/task-management-system.git
-   cd task-management-system
-   ```
-
-2. **Setup Backend:**
-   ```bash
-   cd backend
-   npm install
-   npm run dev
-   ```
-
-3. **Setup Frontend:**
-   ```bash
-   cd ../frontend
-   npm install
-   npm start
-   ```
-
-4. **Open your browser:**
-   - Frontend: http://localhost:3000
-   - Backend API: http://localhost:3001
-
-## 📁 Project Structure
-
-```
-task-management-system/
-├── backend/
-│   ├── server.js              # Express server
-│   ├── package.json          # Backend dependencies
-│   ├── .env.example          # Environment template
-│   └── database.sqlite       # SQLite database file (auto-created)
-├── frontend/
-│   ├── src/
-│   │   ├── App.js           # Main React component
-│   │   ├── App.css          # Styles
-│   │   └── index.js         # React entry point
-│   ├── package.json         # Frontend dependencies
-│   └── public/
-├── .gitignore               # Git ignore rules
-├── deploy.sh                # Deployment script for GitHub Pages
-└── README.md               # This file
-```
-
-## 🔧 Configuration
-
-### Environment Variables
-
-Create a `.env` file in the backend folder based on `.env.example`:
-
-```env
-# Server Configuration
-PORT=3001
-NODE_ENV=development
-```
-
-For the frontend to connect to the deployed backend, create a `.env` file in the frontend directory:
-
-```env
-REACT_APP_API_URL=https://task-management-system-cd8v.onrender.com
-```
-
-## 📊 API Endpoints
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/activities` | Get all activities |
-| GET | `/api/activities/:id` | Get single activity |
-| POST | `/api/activities` | Create new activity |
-| PUT | `/api/activities/:id` | Update activity |
-| DELETE | `/api/activities/:id` | Delete activity |
-| GET | `/api/assignees` | Get unique assignees |
-| GET | `/api/health` | Health check |
-
-## 🎯 Usage
-
-### Adding Tasks
-1. Click "Add New Task" button
-2. Edit the new row inline
-3. Changes save automatically
-
-### Editing Tasks
-- **Text Fields**: Click to edit directly
-- **Dropdown Menus**: Status and Priority have preset options
-- **Progress**: Use slider to adjust percentage
-- **Assignees**: Type names directly
-
-### Task Properties
-- **Task Name**: Description of the task
-- **Status**: Not Started, In Progress, Completed, On Hold, Cancelled
-- **Priority**: Low, Medium, High, Critical
-- **Assignee**: Person responsible
-- **Progress**: Completion percentage (0-100%)
-- **Estimated/Actual Hours**: Time tracking
-
-## 🎨 Customization
-
-### Styling
-- Update `frontend/src/App.css` for custom themes
-- Modify inline styles in components
-- Add new status/priority options in dropdown arrays
-
-### Adding Features
-- New fields: Update both frontend and backend
-- Custom styling: Modify CSS classes
-- New API endpoints: Extend the Express server
-
-## 🚀 Deployment
-
-### Quick Deployment
-
-The repository includes a deployment script that makes it easy to deploy the frontend to GitHub Pages:
-
+1. Clone the repository:
 ```bash
-# Make the script executable
-chmod +x deploy.sh
+git clone https://github.com/ViranjPatel/task-management-system.git
+cd task-management-system
+```
 
-# Run the deployment script
+2. Install frontend dependencies:
+```bash
+cd frontend
+npm install
+```
+
+3. Install backend dependencies:
+```bash
+cd ../backend
+npm install
+```
+
+4. Start the development servers:
+
+Frontend:
+```bash
+cd frontend
+npm start
+```
+
+Backend:
+```bash
+cd backend
+npm start
+```
+
+## Deployment
+
+### Automatic Deployment
+The application is configured with GitHub Actions for automatic deployment:
+- Push to `main` branch triggers automatic deployment to GitHub Pages
+- The deployment workflow builds the React app and deploys it
+
+### Manual Deployment
+You can also deploy manually using the deployment script:
+```bash
+chmod +x deploy.sh
 ./deploy.sh
 ```
 
-### Frontend (React)
+## Important Notes
 
-To manually deploy the frontend:
+1. **First-time GitHub Pages deployment** might take 5-10 minutes to become available.
+2. **Render Backend Sleep**: The backend on Render's free tier goes to sleep after 15 minutes of inactivity. First request will be slow (10-20 seconds) while it wakes up.
+3. **Database Persistence**: SQLite database on Render resets on each deployment or maintenance.
 
-```bash
-cd frontend
-npm run build
-# Deploy the 'build' folder to your web server
-```
-
-### GitHub Pages
-
-You can host the frontend directly on GitHub Pages:
-
-```bash
-cd frontend
-npm run deploy
-```
-
-The `deploy` script builds the app and publishes the `build` folder to the
-`gh-pages` branch. Make sure the `homepage` field in `frontend/package.json` 
-is set to "https://YOUR_USERNAME.github.io/task-management-system".
-
-### Backend on Render
-
-The backend is currently deployed to Render at:
-https://task-management-system-cd8v.onrender.com/
-
-To deploy your own instance:
-
-1. Sign up at [render.com](https://render.com/)
-2. Create a new Web Service
-3. Connect your GitHub repository
-4. Use the following settings:
-   - **Build Command**: `cd backend && npm install`
-   - **Start Command**: `cd backend && node server.js`
-   - **Environment Variables**:
-     - `NODE_ENV`: `production`
-     - `PORT`: `8080` (Render will use its own port but expose on this)
-
-After deployment, update your frontend to use the Render URL by editing the `.env` file in the frontend directory.
-
-**Note**: On Render's free tier, your service will sleep after 15 minutes of inactivity and wake up when a new request comes in.
-
-### Database
-- SQLite: Simple file-based storage, perfect for development
-- Note: On Render's free tier, the database will reset on each deployment
-- For production, consider using a persistent database like PostgreSQL
-
-## 🧪 Testing
-
-```bash
-# Backend tests
-cd backend
-npm test
-
-# Frontend tests
-cd frontend
-npm test
-```
-
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+2. Create a feature branch
+3. Make your changes
+4. Push to your branch
+5. Create a Pull Request
 
-## 📝 License
+## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- [React](https://reactjs.org/) for the frontend framework
-- [Express.js](https://expressjs.com/) for the backend framework
-- [Render](https://render.com/) for free backend hosting
-- [GitHub Pages](https://pages.github.com/) for free frontend hosting
-- Modern CSS techniques for beautiful UI design
-
-## 📞 Support
-
-If you have any questions or run into issues:
-
-1. Check the [Issues](../../issues) page
-2. Create a new issue if your problem isn't listed
-3. Provide detailed information about your environment and the problem
-
-## 🔄 Changelog
-
-### v1.0.0 (Current)
-- ✅ Basic task management functionality
-- ✅ Excel-like editing interface
-- ✅ Real-time data updates
-- ✅ Modern responsive design
-- ✅ SQLite database support
-- ✅ RESTful API architecture
-- ✅ Deployed on GitHub Pages and Render
-
-### Upcoming Features
-- 🔜 User authentication
-- 🔜 Team collaboration
-- 🔜 File attachments
-- 🔜 Advanced reporting
-- 🔜 Mobile app
-
----
-
-**Built with ❤️ using React and Node.js**
+This project is open source and available under the [MIT License](LICENSE).
