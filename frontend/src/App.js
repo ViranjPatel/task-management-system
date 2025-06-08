@@ -80,6 +80,10 @@ function App() {
     });
   };
 
+  const updateTaskLocal = (id, field, value) => {
+    setActivities(prev => prev.map(a => a.id === id ? { ...a, [field]: value } : a));
+  };
+
   const deleteTask = (id) => {
     if (!window.confirm('Are you sure you want to delete this task?')) return;
 
@@ -238,7 +242,8 @@ function App() {
                       <input
                         type="text"
                         value={activity.task_name || ''}
-                        onChange={(e) => updateTask(activity.id, 'task_name', e.target.value)}
+                        onChange={(e) => updateTaskLocal(activity.id, 'task_name', e.target.value)}
+                        onBlur={(e) => updateTask(activity.id, 'task_name', e.target.value)}
                         style={{ border: 'none', background: 'transparent', width: '100%', fontWeight: 'bold' }}
                       />
                     </td>
@@ -271,7 +276,8 @@ function App() {
                       <input
                         type="text"
                         value={activity.assignee || ''}
-                        onChange={(e) => updateTask(activity.id, 'assignee', e.target.value)}
+                        onChange={(e) => updateTaskLocal(activity.id, 'assignee', e.target.value)}
+                        onBlur={(e) => updateTask(activity.id, 'assignee', e.target.value)}
                         style={{ border: 'none', background: 'transparent', width: '100%' }}
                       />
                     </td>
@@ -282,7 +288,9 @@ function App() {
                           min="0"
                           max="100"
                           value={activity.progress || 0}
-                          onChange={(e) => updateTask(activity.id, 'progress', parseInt(e.target.value))}
+                          onChange={(e) => updateTaskLocal(activity.id, 'progress', parseInt(e.target.value))}
+                          onMouseUp={(e) => updateTask(activity.id, 'progress', parseInt(e.target.value))}
+                          onBlur={(e) => updateTask(activity.id, 'progress', parseInt(e.target.value))}
                           style={{ flex: 1 }}
                         />
                         <span style={{ fontSize: '12px', fontWeight: 'bold', minWidth: '40px' }}>
