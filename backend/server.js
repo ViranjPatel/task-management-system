@@ -10,9 +10,14 @@ const port = process.env.PORT || 3001;
 
 // Improved CORS configuration to allow requests from GitHub Pages
 app.use(cors({
-  origin: ['https://viranjpatel.github.io', 'http://localhost:3000'],
+  origin: [
+    'https://viranjpatel.github.io',
+    'https://viranjpatel.github.io/task-management-system',
+    'http://localhost:3000'
+  ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
 }));
 
 app.use(express.json());
