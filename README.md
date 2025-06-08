@@ -26,7 +26,7 @@ A modern, Excel-like task management application built with React frontend and N
 ### Backend
 - **Node.js** - JavaScript runtime
 - **Express.js** - Web framework
-- **JSON File Database** - Lightweight file-based storage
+- **SQLite** - Lightweight file-based database
 - **RESTful API** - Standard API architecture
 
 ## 🚀 Quick Start
@@ -69,7 +69,7 @@ task-management-system/
 │   ├── server.js              # Express server
 │   ├── package.json          # Backend dependencies
 │   ├── .env.example          # Environment template
-│   └── database.json         # JSON database file (auto-created)
+│   └── database.sqlite       # SQLite database file (auto-created)
 ├── frontend/
 │   ├── src/
 │   │   ├── App.js           # Main React component
@@ -159,16 +159,35 @@ The `deploy` script builds the app and publishes the `build` folder to the
 `gh-pages` branch. Make sure to update the `homepage` field in
 `frontend/package.json` with your GitHub username before running the command.
 
-### Backend (Node.js)
+### Backend on Render
+
+You can deploy the backend to Render's free tier:
+
+1. Sign up at [render.com](https://render.com/)
+2. Create a new Web Service
+3. Connect your GitHub repository
+4. Use the following settings:
+   - **Build Command**: `cd backend && npm install`
+   - **Start Command**: `cd backend && node server.js`
+   - **Environment Variables**:
+     - `NODE_ENV`: `production`
+     - `PORT`: `8080` (Render will use its own port but expose on this)
+
+After deployment, update your frontend to use the Render URL:
+
 ```bash
-cd backend
-npm start
-# Use PM2 for production process management
+# Create a .env file in frontend directory
+echo "REACT_APP_API_URL=https://your-render-url.onrender.com" > frontend/.env
+# Then deploy to GitHub Pages
+npm run deploy
 ```
 
+**Note**: On Render's free tier, your service will sleep after 15 minutes of inactivity and wake up when a new request comes in.
+
 ### Database
-- JSON File: Simple file-based storage, perfect for development
-- Easy to backup (just copy the database.json file)
+- SQLite: Simple file-based storage, perfect for development
+- Note: On Render's free tier, the database will reset on each deployment
+- For production, consider using a persistent database like PostgreSQL
 
 ## 🧪 Testing
 
@@ -215,7 +234,7 @@ If you have any questions or run into issues:
 - ✅ Excel-like editing interface
 - ✅ Real-time data updates
 - ✅ Modern responsive design
-- ✅ JSON file database support
+- ✅ SQLite database support
 - ✅ RESTful API architecture
 
 ### Upcoming Features
