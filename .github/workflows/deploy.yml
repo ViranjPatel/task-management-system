@@ -43,7 +43,7 @@ jobs:
         cd frontend
         npm run build
       env:
-        REACT_APP_API_URL: https://task-management-system-backend-latest.onrender.com
+        REACT_APP_API_URL: https://task-management-system-cd8v.onrender.com
         
     - name: Setup Pages
       uses: actions/configure-pages@v4
