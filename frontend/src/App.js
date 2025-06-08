@@ -100,7 +100,7 @@ function App() {
         justifyContent: 'center', 
         alignItems: 'center', 
         height: '100vh',
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        background: 'var(--primary-color)',
         color: 'white',
         fontFamily: 'Arial, sans-serif'
       }}>
@@ -133,7 +133,7 @@ function App() {
         justifyContent: 'center', 
         alignItems: 'center', 
         height: '100vh',
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        background: 'var(--primary-color)',
         color: 'white',
         fontFamily: 'Arial, sans-serif'
       }}>
@@ -145,7 +145,7 @@ function App() {
             onClick={() => window.location.reload()}
             style={{
               background: 'white',
-              color: '#667eea',
+              color: 'var(--primary-color)',
               border: 'none',
               padding: '0.75rem 1.5rem',
               borderRadius: '8px',
@@ -164,12 +164,12 @@ function App() {
   return (
     <div style={{ 
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      background: 'var(--primary-color)',
       fontFamily: 'Arial, sans-serif'
     }}>
       {/* Header */}
       <div style={{
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        background: 'var(--primary-color)',
         color: 'white',
         padding: '1.5rem 2rem',
         display: 'flex',
@@ -181,11 +181,11 @@ function App() {
           Task Management System
         </h1>
         <div style={{ display: 'flex', gap: '1rem' }}>
-          <button 
+          <button
             onClick={addNewTask}
             style={{
-              background: 'linear-gradient(135deg, #4CAF50 0%, #45a049 100%)',
-              color: 'white',
+              background: 'var(--primary-color)',
+              color: 'var(--on-primary)',
               border: 'none',
               padding: '0.75rem 1.5rem',
               borderRadius: '8px',

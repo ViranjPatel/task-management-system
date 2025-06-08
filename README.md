@@ -9,6 +9,7 @@ A full-stack task management application built with React and Node.js.
 - Task categorization with priorities
 - Responsive design
 - Real-time task management
+- UI styling follows Material Design 3 guidelines
 
 ## Deployment Status
 
