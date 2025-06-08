@@ -147,6 +147,18 @@ npm run build
 # Deploy the 'build' folder to your web server
 ```
 
+### GitHub Pages
+You can host the frontend directly on GitHub Pages:
+
+```bash
+cd frontend
+npm run deploy
+```
+
+The `deploy` script builds the app and publishes the `build` folder to the
+`gh-pages` branch. Make sure to update the `homepage` field in
+`frontend/package.json` with your GitHub username before running the command.
+
 ### Backend (Node.js)
 ```bash
 cd backend
