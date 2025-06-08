@@ -4,6 +4,13 @@ A modern, Excel-like task management application built with React frontend and N
 
 ![Task Management System](https://via.placeholder.com/800x400/667eea/ffffff?text=Task+Management+System)
 
+## ✨ Live Demo
+
+- **Frontend**: [https://viranjpatel.github.io/task-management-system/](https://viranjpatel.github.io/task-management-system/)
+- **Backend API**: [https://task-management-system-cd8v.onrender.com/](https://task-management-system-cd8v.onrender.com/)
+
+> **Note**: The backend is hosted on Render's free tier, which means it goes to sleep after 15 minutes of inactivity. The first request might be slow (10-20 seconds) while it wakes up.
+
 ## ✨ Features
 
 - 📊 **Interactive Data Grid** - Excel-like editing experience
@@ -78,6 +85,7 @@ task-management-system/
 │   ├── package.json         # Frontend dependencies
 │   └── public/
 ├── .gitignore               # Git ignore rules
+├── deploy.sh                # Deployment script for GitHub Pages
 └── README.md               # This file
 ```
 
@@ -91,6 +99,12 @@ Create a `.env` file in the backend folder based on `.env.example`:
 # Server Configuration
 PORT=3001
 NODE_ENV=development
+```
+
+For the frontend to connect to the deployed backend, create a `.env` file in the frontend directory:
+
+```env
+REACT_APP_API_URL=https://task-management-system-cd8v.onrender.com
 ```
 
 ## 📊 API Endpoints
@@ -140,7 +154,22 @@ NODE_ENV=development
 
 ## 🚀 Deployment
 
+### Quick Deployment
+
+The repository includes a deployment script that makes it easy to deploy the frontend to GitHub Pages:
+
+```bash
+# Make the script executable
+chmod +x deploy.sh
+
+# Run the deployment script
+./deploy.sh
+```
+
 ### Frontend (React)
+
+To manually deploy the frontend:
+
 ```bash
 cd frontend
 npm run build
@@ -148,6 +177,7 @@ npm run build
 ```
 
 ### GitHub Pages
+
 You can host the frontend directly on GitHub Pages:
 
 ```bash
@@ -156,12 +186,15 @@ npm run deploy
 ```
 
 The `deploy` script builds the app and publishes the `build` folder to the
-`gh-pages` branch. Make sure to update the `homepage` field in
-`frontend/package.json` with your GitHub username before running the command.
+`gh-pages` branch. Make sure the `homepage` field in `frontend/package.json` 
+is set to "https://YOUR_USERNAME.github.io/task-management-system".
 
 ### Backend on Render
 
-You can deploy the backend to Render's free tier:
+The backend is currently deployed to Render at:
+https://task-management-system-cd8v.onrender.com/
+
+To deploy your own instance:
 
 1. Sign up at [render.com](https://render.com/)
 2. Create a new Web Service
@@ -173,14 +206,7 @@ You can deploy the backend to Render's free tier:
      - `NODE_ENV`: `production`
      - `PORT`: `8080` (Render will use its own port but expose on this)
 
-After deployment, update your frontend to use the Render URL:
-
-```bash
-# Create a .env file in frontend directory
-echo "REACT_APP_API_URL=https://your-render-url.onrender.com" > frontend/.env
-# Then deploy to GitHub Pages
-npm run deploy
-```
+After deployment, update your frontend to use the Render URL by editing the `.env` file in the frontend directory.
 
 **Note**: On Render's free tier, your service will sleep after 15 minutes of inactivity and wake up when a new request comes in.
 
@@ -217,6 +243,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - [React](https://reactjs.org/) for the frontend framework
 - [Express.js](https://expressjs.com/) for the backend framework
+- [Render](https://render.com/) for free backend hosting
+- [GitHub Pages](https://pages.github.com/) for free frontend hosting
 - Modern CSS techniques for beautiful UI design
 
 ## 📞 Support
@@ -236,6 +264,7 @@ If you have any questions or run into issues:
 - ✅ Modern responsive design
 - ✅ SQLite database support
 - ✅ RESTful API architecture
+- ✅ Deployed on GitHub Pages and Render
 
 ### Upcoming Features
 - 🔜 User authentication
