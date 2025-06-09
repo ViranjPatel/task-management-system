@@ -4,12 +4,31 @@ import TaskGrid from './TaskGrid';
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
 
+const getInitialTheme = () => {
+  const stored = localStorage.getItem('theme');
+  if (stored) return stored;
+  return typeof window.matchMedia === 'function' &&
+    window.matchMedia('(prefers-color-scheme: dark)').matches
+    ? 'dark'
+    : 'light';
+};
+
 function App() {
   const [activities, setActivities] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [theme, setTheme] = useState(getInitialTheme);
   const syncingIds = useRef(new Set());
   const debounceTimers = useRef(new Map());
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => (prev === 'light' ? 'dark' : 'light'));
+  };
 
   // Load data
   useEffect(() => {
@@ -137,7 +156,7 @@ function App() {
         justifyContent: 'center', 
         alignItems: 'center', 
         height: '100vh',
-        background: 'var(--primary-color)',
+        background: 'var(--md-sys-color-primary)',
         color: 'white',
         fontFamily: 'Arial, sans-serif'
       }}>
@@ -170,7 +189,7 @@ function App() {
         justifyContent: 'center', 
         alignItems: 'center', 
         height: '100vh',
-        background: 'var(--primary-color)',
+        background: 'var(--md-sys-color-primary)',
         color: 'white',
         fontFamily: 'Arial, sans-serif'
       }}>
@@ -182,7 +201,7 @@ function App() {
             onClick={() => window.location.reload()}
             style={{
               background: 'white',
-              color: 'var(--primary-color)',
+              color: 'var(--md-sys-color-primary)',
               border: 'none',
               padding: '0.75rem 1.5rem',
               borderRadius: '8px',
@@ -199,14 +218,14 @@ function App() {
   }
 
   return (
-    <div style={{ 
+    <div style={{
       minHeight: '100vh',
-      background: 'var(--primary-color)',
+      background: 'var(--md-sys-color-background)',
       fontFamily: 'Arial, sans-serif'
     }}>
       {/* Header */}
       <div style={{
-        background: 'var(--primary-color)',
+        background: 'linear-gradient(135deg, var(--md-sys-color-primary) 0%, #7b4dff 100%)',
         color: 'white',
         padding: '1.5rem 2rem',
         display: 'flex',
@@ -221,8 +240,8 @@ function App() {
           <button
             onClick={addNewTask}
             style={{
-              background: 'var(--primary-color)',
-              color: 'var(--on-primary)',
+              background: 'var(--md-sys-color-primary)',
+              color: 'var(--md-sys-color-on-primary)',
               border: 'none',
               padding: '0.75rem 1.5rem',
               borderRadius: '8px',
@@ -231,6 +250,13 @@ function App() {
             }}
           >
             + Add New Task
+          </button>
+          <button
+            className="theme-toggle"
+            onClick={toggleTheme}
+            aria-label="Toggle theme"
+          >
+            {theme === 'light' ? '🌙' : '☀️'}
           </button>
         </div>
       </div>
