@@ -1,8 +1,31 @@
 import React, { useMemo, useState, useRef } from 'react';
 import { AgGridReact } from 'ag-grid-react';
-import 'ag-grid-community/styles/ag-grid.css';
-import 'ag-grid-community/styles/ag-theme-alpine.css';
+import { themeQuartz } from 'ag-grid-community';
 import './App.css';
+
+const myTheme = themeQuartz.withParams({
+  backgroundColor: '#1f2836',
+  browserColorScheme: 'inherit',
+  chromeBackgroundColor: {
+    ref: 'foregroundColor',
+    mix: 0.07,
+    onto: 'backgroundColor',
+  },
+  foregroundColor: '#FFF',
+  headerFontSize: 14,
+  fontFamily: [
+    { googleFont: 'Inter' },
+    '-apple-system',
+    'BlinkMacSystemFont',
+    'Segoe UI',
+    'Roboto',
+    'Oxygen-Sans',
+    'Ubuntu',
+    'Cantarell',
+    'Helvetica Neue',
+    'sans-serif',
+  ],
+});
 
 function TaskGrid({ activities, onCellUpdate, deleteTask }) {
   const gridRef = useRef();
@@ -75,12 +98,13 @@ function TaskGrid({ activities, onCellUpdate, deleteTask }) {
           style={{ width: '100%', padding: '0.5rem' }}
         />
       </div>
-      <div className="ag-theme-alpine" style={{ height: 500, width: '100%' }}>
+      <div style={{ height: 500, width: '100%' }}>
         <AgGridReact
           ref={gridRef}
           rowData={activities}
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
+          theme={myTheme}
           pagination={true}
           paginationPageSize={10}
           onCellValueChanged={onCellValueChanged}
