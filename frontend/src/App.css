@@ -102,14 +102,23 @@
   --md-sys-color-background: var(--md-sys-color-background-dark);
 }
 
+/* Manual light theme toggle */
+[data-theme="light"] {
+  --md-sys-color-primary: #6200ea;
+  --md-sys-color-on-primary: #ffffff;
+  --md-sys-color-surface: #fef7ff;
+  --md-sys-color-on-surface: #1c1b1f;
+  --md-sys-color-background: #fef7ff;
+}
+
 * {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -149,6 +158,7 @@ body {
   font-size: var(--md-sys-typescale-headline-large-size);
   font-weight: var(--md-sys-typescale-headline-large-weight);
   letter-spacing: 0;
+  font-family: 'Inter', sans-serif;
 }
 
 .header-actions {
