@@ -2,6 +2,7 @@ import React, { useMemo, useState, useRef } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import { themeQuartz } from 'ag-grid-community';
 import './App.css';
+import { ProgressRenderer, ProgressEditor } from './ProgressCell';
 
 const myTheme = themeQuartz.withParams({
   backgroundColor: '#1f2836',
@@ -56,7 +57,8 @@ function TaskGrid({ activities, onCellUpdate, deleteTask }) {
         field: 'progress',
         editable: true,
         filter: 'agNumberColumnFilter',
-        valueFormatter: (params) => `${params.value || 0}%`,
+        cellRenderer: 'progressRenderer',
+        cellEditor: 'progressEditor',
       },
       {
         headerName: 'Actions',
@@ -104,6 +106,10 @@ function TaskGrid({ activities, onCellUpdate, deleteTask }) {
           rowData={activities}
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
+          frameworkComponents={{
+            progressRenderer: ProgressRenderer,
+            progressEditor: ProgressEditor,
+          }}
           theme={myTheme}
           pagination={true}
           paginationPageSize={10}
@@ -116,3 +122,4 @@ function TaskGrid({ activities, onCellUpdate, deleteTask }) {
 }
 
 export default TaskGrid;
+
