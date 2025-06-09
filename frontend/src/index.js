@@ -3,6 +3,10 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { ModuleRegistry, AllCommunityModule } from 'ag-grid-community';
+
+// Register AG Grid Modules
+ModuleRegistry.registerModules([AllCommunityModule]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
