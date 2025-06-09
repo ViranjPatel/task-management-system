@@ -30,6 +30,14 @@ const db = new sqlite3.Database(dbPath, (err) => {
     console.error('❌ Error opening database:', err.message);
   } else {
     console.log('✅ Connected to SQLite database successfully!');
+    // Enable Write-Ahead Logging for better concurrency and performance
+    db.exec('PRAGMA journal_mode=WAL; PRAGMA synchronous=NORMAL;', (pragmaErr) => {
+      if (pragmaErr) {
+        console.error('❌ Error setting PRAGMA options:', pragmaErr.message);
+      } else {
+        console.log('⚙️  SQLite PRAGMA options set for performance');
+      }
+    });
   }
 });
 
@@ -60,6 +68,21 @@ const initDB = () => {
       console.error('❌ Error creating table:', err.message);
     } else {
       console.log('✅ Activities table created successfully');
+
+      // Create indexes to speed up common queries
+      db.exec(`
+        CREATE INDEX IF NOT EXISTS idx_activities_status ON activities(status);
+        CREATE INDEX IF NOT EXISTS idx_activities_assignee ON activities(assignee);
+        CREATE INDEX IF NOT EXISTS idx_activities_priority ON activities(priority);
+        CREATE INDEX IF NOT EXISTS idx_activities_due_date ON activities(due_date);
+        CREATE INDEX IF NOT EXISTS idx_activities_created_at ON activities(created_at);
+      `, (indexErr) => {
+        if (indexErr) {
+          console.error('❌ Error creating indexes:', indexErr.message);
+        } else {
+          console.log('⚡️ Indexes created successfully');
+        }
+      });
       
       // Check if we need to insert sample data
       db.get('SELECT COUNT(*) as count FROM activities', (err, row) => {
